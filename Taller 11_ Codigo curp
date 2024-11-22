@@ -1,0 +1,42 @@
+section .data
+    ; Definimos la CURP de Jose Eduardo Torres Orozco
+    curp db "TOOE051202HBCRRDA2", 0  ; CURP: TOOE051202HBCRRDA2
+
+section .text
+    global _start
+
+_start:
+    ; Acceso y manipulación de la CURP
+
+    ; Cambiamos el año de nacimiento a 2002
+    mov byte [curp + 4], '0'    ; Año (primer dígito)
+    mov byte [curp + 5], '5'    ; Año (segundo dígito)
+
+    ; Cambiamos el sexo a femenino
+    mov byte [curp + 10], 'H'   ; Sexo
+
+    ; Cambiamos la entidad de nacimiento a Jalisco (JA)
+    mov byte [curp + 11], 'B'   ; Primera letra de la entidad
+    mov byte [curp + 12], 'C'   ; Segunda letra de la entidad
+
+    ; Imprimir la CURP después de las modificaciones
+    mov edx, 18                ; Número de bytes a imprimir (18 caracteres)
+    mov ecx, curp              ; Dirección del dato
+    mov ebx, 1                 ; File descriptor (stdout)
+    mov eax, 4                 ; Número de syscall (sys_write)
+    int 0x80                   ; Interrupción del sistema
+
+    ; Finalizamos el programa
+    mov eax, 1                 ; Syscall para 'exit'
+    xor ebx, ebx               ; Código de salida 0
+    int 0x80                   ; Llamar a la syscall
+
+
+
+
+;Acceso: La CURP se representa como una cadena alfanumérica de 18 caracteres, por ejemplo: curp
+;db "TOOE051202HBCRRDA2", 0.
+;Manipulación: Accedes y cambias partes de la CURP, como el año de nacimiento, el sexo o la entidad
+;de nacimiento.
+;Objetivo: Modificar o validar la CURP para asegurar su correcto formato, verificar campos como la
+;fecha de nacimiento o el sexo, y realizar ajustes o cálculos según sea necesario.

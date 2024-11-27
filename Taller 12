@@ -1,0 +1,40 @@
+section .data
+    msg db 'El resultado es: ', 0
+    num1 db '3', 0
+    num2 db '4', 0
+    result db 0
+
+section .text
+    global _start
+
+_start:
+    ; Convertir los caracteres a números
+    mov al, [num1]
+    sub al, '0'
+    mov bl, [num2]
+    sub bl, '0'
+
+    ; Sumar los números
+    add al, bl
+
+    ; Convertir el resultado a carácter
+    add al, '0'
+    mov [result], al
+
+    ; Mostrar el mensaje y el resultado
+    mov eax, 4          ; syscall number (sys_write)
+    mov ebx, 1          ; file descriptor (stdout)
+    mov ecx, msg        ; message to write
+    mov edx, 17         ; message length
+    int 0x80            ; call kernel
+
+    mov eax, 4          ; syscall number (sys_write)
+    mov ebx, 1          ; file descriptor (stdout)
+    mov ecx, result     ; result to write
+    mov edx, 1          ; result length
+    int 0x80            ; call kernel
+
+    ; Salir
+    mov eax, 1          ; syscall number (sys_exit)
+    xor ebx, ebx        ; exit status
+    int 0x80            ; call kernel

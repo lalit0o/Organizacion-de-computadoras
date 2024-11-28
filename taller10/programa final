@@ -1,0 +1,47 @@
+section .data
+    num1 db 2                   ; Primer número (ejemplo: 2)
+    num2 db 4                   ; Segundo número (ejemplo: 4)
+    result db 0                 ; Variable para almacenar el resultado de la suma
+    msg db 'Resultado: '        ; Mensaje inicial
+    resultStr db '00', 0        ; Cadena para el resultado en ASCII y 0 al final
+    zeroMsg db 'Esto es un cero', 10 ; Mensaje "Esto es un cero" con salto de línea
+
+section .text
+    global _start
+
+_start:
+    mov al, [num1]              ; Cargar el primer número en AL
+    add al, [num2]              ; Sumar el segundo número
+    mov [result], al            ; Almacenar el resultado de la suma
+
+    cmp al, 0                   ; Comparar el resultado con 0
+    je print_zero               ; Si es igual a 0, saltar a print_zero
+
+    add al, '0'                 ; Convertir a carácter ASCII
+    mov [resultStr], al         ; Guardar el carácter en resultStr para imprimir
+
+    mov eax, 4                  ; Syscall para escribir
+    mov ebx, 1                  ; Salida estándar (stdout)
+    mov ecx, msg                ; Dirección del mensaje
+    mov edx, 10                 ; Longitud del mensaje
+    int 0x80                    ; Llamada al sistema
+
+    mov eax, 4                  ; Syscall para escribir
+    mov ebx, 1                  ; Salida estándar (stdout)
+    mov ecx, resultStr          ; Dirección de la cadena del resultado
+    mov edx, 1                  ; Longitud de la cadena (1 dígito)
+    int 0x80                    ; Llamada al sistema
+
+    jmp end_program             ; Saltar al final del programa
+
+print_zero:
+    mov eax, 4                  ; Syscall para escribir
+    mov ebx, 1                  ; Salida estándar (stdout)
+    mov ecx, zeroMsg            ; Dirección del mensaje de cero
+    mov edx, 15                 ; Longitud del mensaje
+    int 0x80                    ; Llamada al sistema
+
+end_program:
+    mov eax, 1                  ; Syscall para salir
+    mov ebx, 0                  ; Código de salida 0
+    int 0x80                    ; Llamada al sistema

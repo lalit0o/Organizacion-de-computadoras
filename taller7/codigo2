@@ -1,0 +1,31 @@
+section .data
+
+num1 db 5 ;Define una variable "num1" y le da el valor de 5
+num2 db 11 ;Define una variable "num2" y le da el valor de 11
+result db 0 ;Define una variable "result" y le da el valor de 0
+msg db 'Resultado: '
+section .bss ;Se inicia seccion .bss
+buffer resb 4 ;Se reserva un buffer de 4 bytes para usarse después
+section .text ;Se inicia la seccion ejecutable del codigo
+global _start ;Etiqueta que sirve para como entrada principal del programa
+_start: ;Es una etiqueta que marca el inicio del programa ejecutable
+mov al, [num1] ;Carga el valor de num1 en el registro al
+add al, [num2] ;Suma el valor de num1 y num2, y el resultado lo almacena en el registro al
+mov [result], al ;Almacena el valor de al en "result"
+; Convertir el resultado a ASCII
+movzx eax, byte [result] ;Carga el valor de result en el registro eax, extendiendo ceros
+add eax, 20 ; Convierte el valor numérico en su correspondiente ASCII ('0' = 48)
+mov [buffer], al ; Almacenar el carácter ASCII en el buffer
+mov eax, 4 ; Configura el registro eax con el número 4
+mov ebx, 1 ; Configura el registro ebx con el número 1
+mov ecx, msg ; Configura el registro ecx con la dirección de mensaje que se va a imprimir
+mov edx, 11 ;Configura el registro edx con el número 11
+int 0x80 ;Llama al sistema operativo para ejecutar la llamada al sistema
+mov eax, 4 ;Configura el registro de eax con el número 4
+mov ebx, 1 ;Configura el registro ebx con el número 1
+mov ecx, buffer ;Configura el registro ecx con la dirección del buffer que contiene el carácter ASCII
+mov edx, 1 ;Configura el registro edx con el número 1
+int 0x80 ;Llama al sistema operativo para escribir el carácter ASCII en la salida estándar
+mov eax, 1 ;Configura el registro eax con el número 1
+xor ebx, ebx ;Limpia el registro ebx, estableciendo el código de salida en 0
+int 0x80 ;Llama al sistema operativo para salir del programa

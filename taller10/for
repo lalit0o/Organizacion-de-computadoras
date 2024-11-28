@@ -1,0 +1,18 @@
+for_bucle:
+
+    mov al, [i]        ; Cargar i en al
+    cmp al, 5          ; Comparar i con 5
+    jg end_bucle       ; Si i > 5, salta al final del bucle
+
+    ; Multiplicar product por i
+    mov bl, [product]  ; Cargar product en BL
+    mul al             ; Multiplicar AL (i) por BL (product)
+    mov [product], al  ; Almacenar el nuevo product
+
+    ; Incrementar i
+    inc byte [i]       ; Incrementar i en 1
+
+    ; Repetir el bucle
+    jmp for_bucle      ; Saltar de nuevo al inicio del bucle
+
+end_loop:

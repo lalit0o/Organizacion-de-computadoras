@@ -1,0 +1,11 @@
+mov al, [num]       ; Cargar num en AL
+
+test al, 1          ; Verificar el bit menos significativo
+jz etiqueta_par     ; Si el resultado es 0, es par (salta a etiqueta_par)
+
+etiqueta_impar:     ; Almacenar resultado impar
+jmp fin_programa    ; Saltar al final
+
+etiqueta_par:       ; Almacenar resultado par
+
+fin_programa:       ; Fin del programa

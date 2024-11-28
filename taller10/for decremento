@@ -1,0 +1,13 @@
+bucle_for:
+
+mov al, [count]     ; Cargar count en AL
+cmp al, 1           ; Comparar count con 1
+jl fin_bucle        ; Si count < 1, salta al final del bucle
+
+; Decrementar count
+dec byte [count]    ; Decrementar count en 1
+
+; Repetir el bucle
+jmp bucle_for       ; Saltar de nuevo al inicio del bucle
+
+fin_bucle:

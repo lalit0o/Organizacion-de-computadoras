@@ -1,0 +1,16 @@
+while_bucle
+
+mov bl, [count]  ; Cargar count en bl
+cmp bl, 10       ; Comparar count con 10
+jg fin_b ucle    ; Si count > 10, salta al final del bucle
+
+; Si count <=10, suma count a sum
+add [sum], bl  ; Sumar count a sum
+
+; Incrementar count
+inc byte [count] ; Incrementar count en 1
+
+;Repetir el bucle
+jmp while_bucle ; Saltar de nuevo al inicio del bucle
+
+end_loop:
